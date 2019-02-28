@@ -71,6 +71,26 @@ function solve(problem, file) {
     return selectedSlides;
   }
 
+  if (file.startsWith("e")) {
+    //let [photos, rest] = _.partition(problem.photos, p => p.tags.length >= 2);
+
+    let photos = problem.photos;
+    photos = assembleV(photos);
+
+    let selected = [photos.shift()];
+
+    while (photos.length > 0) {
+      if (photos.length % 100 == 0) console.log(photos.length);
+      let last = selected[selected.length - 1];
+      let next = findRelatedPhoto(last, photos, 9);
+      selected.push(next);
+    }
+
+    selectedSlides = photosHtoSlides(selected);
+
+    return selectedSlides;
+  }
+
   if (file.startsWith("a") || file.startsWith("d") || file.startsWith("e")) {
     let slides = [];
 
