@@ -32,12 +32,17 @@ function solve(problem, file) {
   let photosH = filterH(problem.photos);
   let photosV = filterV(problem.photos);
   const tag = findMaxTag(problem.photos);
-  photosH = filterByTag(photosH, tag);
-  photosV = filterByTag(photosV, tag);
+  [photosH, restH] = filterByTag(photosH, tag);
+  [photosV, restV] = filterByTag(photosV, tag);
   //photosH = sortByTagCount(photosH);
   let slidesH = photosHtoSlides(photosH);
   let slidesV = photosVtoSlides(photosV);
-  return slidesH.concat(slidesV);
+  let slidesRestH = photosHtoSlides(restH);
+  let slidesRestV = photosVtoSlides(restV);
+  return slidesH
+    .concat(slidesV)
+    .concat(slidesRestH)
+    .concat(slidesRestV);
 }
 
 module.exports = solve;
