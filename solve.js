@@ -36,13 +36,9 @@ function solve(problem, file) {
   [photosV, restV] = filterByTag(photosV, tag);
   //photosH = sortByTagCount(photosH);
   let slidesH = photosHtoSlides(photosH);
-  let slidesV = photosVtoSlides(photosV);
+  let slidesV = photosVtoSlides(photosV, restV);
   let slidesRestH = photosHtoSlides(restH);
-  let slidesRestV = photosVtoSlides(restV);
-  return slidesH
-    .concat(slidesV)
-    .concat(slidesRestH)
-    .concat(slidesRestV);
+  return slidesH.concat(slidesV).concat(slidesRestH);
 }
 
 module.exports = solve;
