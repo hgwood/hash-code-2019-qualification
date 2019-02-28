@@ -2,11 +2,13 @@ const debug = require("debug")("solve");
 const _ = require("lodash");
 const gridUtils = require("./grid-utils");
 
-const filterByTag = require("./filter-by-tag");
 const filterH = require("./filter-h");
-const photosToId = require("./photos-to-id");
+const filterV = require("./filter-v");
+const filterByTag = require("./filter-by-tag");
 const findMaxTag = require("./find-max-tag");
 const sortByTagCount = require("./sort-by-tag-count");
+const photosHtoSlides = require("./photos-hto-slides");
+const photosVtoSlides = require("./photos-vto-slides");
 
 /**
  * @typedef {object} Photo
@@ -28,10 +30,13 @@ const sortByTagCount = require("./sort-by-tag-count");
  */
 function solve(problem, file) {
   let photosH = filterH(problem.photos);
+  let photosV = filterV(problem.photos);
   const tag = findMaxTag(photosH);
   photosH = filterByTag(photosH, tag);
-  photosH = sortByTagCount(photosH);
-  return photosToId(photosH).map(p => [p]);
+  //photosH = sortByTagCount(photosH);
+  let slidesH = photosHtoSlides(photosH);
+  let slidesV = photosVtoSlides(photosV);
+  return slidesH.concat(slidesV);
 }
 
 module.exports = solve;
