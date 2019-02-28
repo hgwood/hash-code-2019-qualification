@@ -29,16 +29,26 @@ const photosVtoSlides = require("./photos-vto-slides");
  * @returns {Slideshow}
  */
 function solve(problem, file) {
+  let slides = [];
+
   let photosH = filterH(problem.photos);
   let photosV = filterV(problem.photos);
-  const tag = findMaxTag(problem.photos);
-  [photosH, restH] = filterByTag(photosH, tag);
-  [photosV, restV] = filterByTag(photosV, tag);
-  //photosH = sortByTagCount(photosH);
-  let slidesH = photosHtoSlides(photosH);
-  let slidesV = photosVtoSlides(photosV, restV);
-  let slidesRestH = photosHtoSlides(restH);
-  return slidesH.concat(slidesV).concat(slidesRestH);
+
+  while (photosH.length > 0 || photosV.length > 0) {
+    let allPhotos = photosH.concat(photosV);
+    const tag = findMaxTag(allPhotos);
+    [photosH, restH] = filterByTag(photosH, tag);
+    [photosV, restV] = filterByTag(photosV, tag);
+    let slidesH = photosHtoSlides(photosH);
+    [slidesV, restV] = photosVtoSlides(photosV, restV);
+    slides = slides.concat(slidesH).concat(slidesV);
+    //console.log(photosH.length, photosV.length);
+    photosH = restH || [];
+    photosV = restV || [];
+  }
+
+  return slides;
 }
 
+//photosH = sortByTagCount(photosH);
 module.exports = solve;
