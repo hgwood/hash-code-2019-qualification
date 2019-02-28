@@ -10,6 +10,7 @@ const sortByTagCount = require("./sort-by-tag-count");
 const photosHtoSlides = require("./photos-hto-slides");
 const photosVtoSlides = require("./photos-vto-slides");
 const findRelatedPhoto = require("./find-related-photo");
+const findBestRelatedPhoto = require("./find-best-related-photo");
 const assembleV = require("./assemble-v");
 
 /**
@@ -55,12 +56,13 @@ function solve(problem, file) {
     assembledV = assembleV(photosV);
 
     let photos = photosH.concat(assembledV);
-    let selected = [photos.shift()];
+    let selected = [photos.pop()];
 
     while (photos.length > 0) {
       if (photos.length % 100 == 0) console.log(photos.length);
       let last = selected[selected.length - 1];
       let next = findBestRelatedPhoto(last, photos);
+      photos.splice(photos.indexOf(next), 1);
       selected.push(next);
     }
 
@@ -69,12 +71,7 @@ function solve(problem, file) {
     return selectedSlides;
   }
 
-  if (
-    file.startsWith("a") ||
-    file.startsWith("c") ||
-    file.startsWith("d") ||
-    file.startsWith("e")
-  ) {
+  if (file.startsWith("a") || file.startsWith("d") || file.startsWith("e")) {
     let slides = [];
 
     let photosH = filterH(problem.photos);
