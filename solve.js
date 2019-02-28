@@ -31,7 +31,7 @@ const photosVtoSlides = require("./photos-vto-slides");
 function solve(problem, file) {
   let photosH = filterH(problem.photos);
   let photosV = filterV(problem.photos);
-  const tag = findMaxTag(photosH);
+  const tag = findMaxTag(problem.photos);
   photosH = filterByTag(photosH, tag);
   //photosH = sortByTagCount(photosH);
   let slidesH = photosHtoSlides(photosH);
