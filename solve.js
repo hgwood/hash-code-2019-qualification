@@ -6,6 +6,7 @@ const filterByTag = require("./filter-by-tag");
 const filterH = require("./filter-h");
 const photosToId = require("./photos-to-id");
 const findMaxTag = require("./find-max-tag");
+const sortByTagCount = require("./sort-by-tag-count");
 
 /**
  * @typedef {object} Photo
@@ -29,6 +30,7 @@ function solve(problem, file) {
   let photosH = filterH(problem.photos);
   const tag = findMaxTag(photosH);
   photosH = filterByTag(photosH, tag);
+  photosH = sortByTagCount(photosH);
   return photosToId(photosH).map(p => [p]);
 }
 
