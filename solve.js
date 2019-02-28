@@ -10,6 +10,7 @@ const sortByTagCount = require("./sort-by-tag-count");
 const photosHtoSlides = require("./photos-hto-slides");
 const photosVtoSlides = require("./photos-vto-slides");
 const findRelatedPhoto = require("./find-related-photo");
+const assembleV = require("./assemble-v");
 
 /**
  * @typedef {object} Photo
@@ -46,6 +47,26 @@ function solve(problem, file) {
     restSlides = photosHtoSlides(rest);
 
     return selectedSlides.concat(restSlides);
+  }
+
+  if (file.startsWith("c")) {
+    let photosV = filterV(problem.photos);
+    let photosH = filterH(problem.photos);
+    assembledV = assembleV(photosV);
+
+    let photos = photosH.concat(assembledV);
+    let selected = [photos.shift()];
+
+    while (photos.length > 0) {
+      if (photos.length % 100 == 0) console.log(photos.length);
+      let last = selected[selected.length - 1];
+      let next = findBestRelatedPhoto(last, photos);
+      selected.push(next);
+    }
+
+    selectedSlides = photosHtoSlides(selected);
+
+    return selectedSlides;
   }
 
   if (
