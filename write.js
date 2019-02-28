@@ -11,6 +11,8 @@ function writeLines(path, lines) {
   debug(`wrote ${lines.length} lines to ${path}`);
 }
 
-const unparse = _.constant([]);
+const unparse = solution => {
+  return [solution.length, ...solution.map(photos => photos.join(" "))];
+};
 
 module.exports.unparse = unparse;
