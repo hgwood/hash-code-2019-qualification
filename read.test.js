@@ -14,10 +14,10 @@ H 2 garden cat
     `;
     assert.deepEqual(parse(textFromInputFile), {
       photos: [
-        { orientation: "H", tags: ["cat", "beach", "sun"] },
-        { orientation: "V", tags: ["selfie", "smile"] },
-        { orientation: "V", tags: ["garden", "selfie"] },
-        { orientation: "H", tags: ["garden", "cat"] }
+        { index: 0, orientation: "H", tags: ["cat", "beach", "sun"] },
+        { index: 1, orientation: "V", tags: ["selfie", "smile"] },
+        { index: 2, orientation: "V", tags: ["garden", "selfie"] },
+        { index: 3, orientation: "H", tags: ["garden", "cat"] }
       ]
     });
   });
