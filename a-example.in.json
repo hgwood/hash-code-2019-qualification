@@ -1,1 +1,1 @@
-{"photos":[{"index":0,"orientation":"H","tags":["cat","beach","sun"]},{"index":1,"orientation":"V","tags":["selfie","smile"]},{"index":2,"orientation":"V","tags":["garden","selfie"]},{"index":3,"orientation":"H","tags":["garden","cat"]}]}
+{"photos":[{"index":0,"orientation":"H","tags":["cat","beach","sun"]},{"index":1,"orientation":"V","tags":["selfie","smile"]},{"index":2,"orientation":"V","tags":["garden","selfie"]},{"index":3,"orientation":"H","tags":["garden","cat"]}],"byTags":{"cat":[0,3],"beach":[0],"sun":[0],"selfie":[1,2],"smile":[1],"garden":[2,3]}}

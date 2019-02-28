@@ -3,6 +3,7 @@ const assert = require("assert");
 const debug = require("debug")("read");
 const fs = require("fs");
 const jolicitron = require("jolicitron");
+const byTags = require("./by-tags");
 
 module.exports = function read(filePath) {
   const cachedFile = `${filePath.split(".")[0]}.in.json`;
@@ -19,7 +20,7 @@ module.exports = function read(filePath) {
     }
     const textFromInputFile = fs.readFileSync(filePath, "utf8");
     debug(`read ${textFromInputFile.length} chars from ${filePath}`);
-    const result = module.exports.parse(textFromInputFile);
+    const result = parseAndValidate(textFromInputFile);
     fs.writeFileSync(cachedFile, JSON.stringify(result));
     debug(`written cached input file to ${cachedFile}`);
     return result;
@@ -38,10 +39,16 @@ const parse = inputText => {
   return parsedValue;
 };
 
+const enrich = parserOutput => {
+  parserOutput.byTags = byTags(parserOutput);
+  return parserOutput;
+};
+
 const assertValid = _.tap(parserOutput => {});
 
 const parseAndValidate = _.flow(
   parse,
+  enrich,
   assertValid,
   _.tap(() => debug("parsing completed"))
 );
