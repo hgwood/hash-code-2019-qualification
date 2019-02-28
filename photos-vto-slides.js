@@ -3,6 +3,9 @@ const debug = require("debug")("photosVtoSlides");
 const _ = require("lodash");
 
 module.exports = function photosVtoSlides(photos, rest) {
+  photos = photos.map(p => p.index);
+  rest = rest.map(p => p.index);
+
   let slides = [];
 
   while (photos.length > 0 && rest.length > 0) {
