@@ -39,6 +39,8 @@ function solve(problem, file) {
     const tag = findMaxTag(allPhotos);
     [photosH, restH] = filterByTag(photosH, tag);
     [photosV, restV] = filterByTag(photosV, tag);
+    photosH = sortByTagCount(photosH);
+    photosV = sortByTagCount(photosV);
     let slidesH = photosHtoSlides(photosH);
     [slidesV, restV] = photosVtoSlides(photosV, restV);
     slides = slides.concat(slidesH).concat(slidesV);
