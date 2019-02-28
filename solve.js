@@ -33,6 +33,7 @@ function solve(problem, file) {
   let photosV = filterV(problem.photos);
   const tag = findMaxTag(problem.photos);
   photosH = filterByTag(photosH, tag);
+  photosV = filterByTag(photosV, tag);
   //photosH = sortByTagCount(photosH);
   let slidesH = photosHtoSlides(photosH);
   let slidesV = photosVtoSlides(photosV);
