@@ -72,6 +72,27 @@ function solve(problem, file) {
     return selectedSlides;
   }
 
+  if (file.startsWith("d")) {
+    let photosV = filterV(problem.photos);
+    let photosH = filterH(problem.photos);
+    assembledV = assembleV(photosV);
+
+    photos = photosH.concat(assembledV);
+    let selected = [photos.pop()];
+
+    while (photos.length > 0) {
+      console.log(photos.length);
+      let last = selected[selected.length - 1];
+      let next = findGoodRelatedPhoto(last, photos, 4);
+      photos.splice(photos.indexOf(next), 1);
+      selected.push(next);
+    }
+
+    selectedSlides = photosHtoSlides(selected);
+
+    return selectedSlides;
+  }
+
   if (file.startsWith("e")) {
     //let [photos, rest] = _.partition(problem.photos, p => p.tags.length >= 2);
 
@@ -92,7 +113,7 @@ function solve(problem, file) {
     return selectedSlides;
   }
 
-  if (file.startsWith("a") || file.startsWith("d")) {
+  if (file.startsWith("a")) {
     let slides = [];
 
     let photosH = filterH(problem.photos);
