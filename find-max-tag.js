@@ -11,6 +11,6 @@ module.exports = function findMaxTag(photos) {
     });
   });
   const entries = Object.entries(tags);
-  const sorted = entries.sort((a, b) => a[1] - b[1]);
+  const sorted = entries.sort((a, b) => b[1] - a[1]);
   return sorted[0][0];
 };
