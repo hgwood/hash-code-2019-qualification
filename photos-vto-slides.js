@@ -10,11 +10,11 @@ module.exports = function photosVtoSlides(photos, rest) {
   }
 
   if (photos.length >= 2) {
-    slides = slides.concat(_.chunk(photos));
+    slides = slides.concat(_.chunk(photos, 2));
   }
 
   if (rest.length >= 2) {
-    slides = slides.concat(_.chunk(rest));
+    slides = slides.concat(_.chunk(rest, 2));
   }
 
   return slides;
