@@ -9,6 +9,7 @@ const findMaxTag = require("./find-max-tag");
 const sortByTagCount = require("./sort-by-tag-count");
 const photosHtoSlides = require("./photos-hto-slides");
 const photosVtoSlides = require("./photos-vto-slides");
+const findRelatedPhoto = require("./find-related-photo");
 
 /**
  * @typedef {object} Photo
@@ -29,27 +30,49 @@ const photosVtoSlides = require("./photos-vto-slides");
  * @returns {Slideshow}
  */
 function solve(problem, file) {
-  let slides = [];
+  if (file.startsWith("b")) {
+    let [photos, rest] = _.partition(problem.photos, p => p.tags.length >= 2);
 
-  let photosH = filterH(problem.photos);
-  let photosV = filterV(problem.photos);
+    let selected = [photos.shift()];
 
-  while (photosH.length > 0 || photosV.length > 0) {
-    let allPhotos = photosH.concat(photosV);
-    const tag = findMaxTag(allPhotos);
-    [photosH, restH] = filterByTag(photosH, tag);
-    [photosV, restV] = filterByTag(photosV, tag);
-    photosH = sortByTagCount(photosH);
-    photosV = sortByTagCount(photosV);
-    let slidesH = photosHtoSlides(photosH);
-    [slidesV, restV] = photosVtoSlides(photosV, restV);
-    slides = slides.concat(slidesH).concat(slidesV);
-    //console.log(photosH.length, photosV.length);
-    photosH = restH || [];
-    photosV = restV || [];
+    while (photos.length > 0) {
+      if (photos.length % 100 == 0) console.log(photos.length);
+      let last = selected[selected.length - 1];
+      let next = findRelatedPhoto(last, photos);
+      selected.push(next);
+    }
+
+    selectedSlides = photosHtoSlides(selected);
+    restSlides = photosHtoSlides(rest);
+
+    return selectedSlides.concat(restSlides);
   }
 
-  return slides;
+  if (
+    file.startsWith("a") ||
+    file.startsWith("c") ||
+    file.startsWith("d") ||
+    file.startsWith("e")
+  ) {
+    let slides = [];
+
+    let photosH = filterH(problem.photos);
+    let photosV = filterV(problem.photos);
+
+    while (photosH.length > 0 || photosV.length > 0) {
+      let allPhotos = photosH.concat(photosV);
+      const tag = findMaxTag(allPhotos);
+      [photosH, restH] = filterByTag(photosH, tag);
+      [photosV, restV] = filterByTag(photosV, tag);
+      let slidesH = photosHtoSlides(photosH);
+      [slidesV, restV] = photosVtoSlides(photosV, restV);
+      slides = slides.concat(slidesH).concat(slidesV);
+      photosH = restH || [];
+      photosV = restV || [];
+    }
+
+    return slides;
+  }
 }
 
 //photosH = sortByTagCount(photosH);
