@@ -5,6 +5,7 @@ const gridUtils = require("./grid-utils");
 const filterByTag = require("./filter-by-tag");
 const filterH = require("./filter-h");
 const photosToId = require("./photos-to-id");
+const findMaxTag = require("./find-max-tag");
 
 /**
  * @typedef {object} Photo
@@ -26,7 +27,7 @@ const photosToId = require("./photos-to-id");
  */
 function solve(problem, file) {
   let photosH = filterH(problem.photos);
-  const tag = photosH[0].tags[0];
+  const tag = findMaxTag(photosH);
   photosH = filterByTag(photosH, tag);
   return photosToId(photosH).map(p => [p]);
 }
