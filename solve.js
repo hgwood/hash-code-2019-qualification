@@ -4,6 +4,7 @@ const gridUtils = require("./grid-utils");
 
 /**
  * @typedef {object} Photo
+ * @property {number} index
  * @property {"H" | "V"} orientation
  * @property {Array<String>} tags
  *
